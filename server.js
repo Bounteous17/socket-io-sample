@@ -1,4 +1,5 @@
 const express = require('express');
+const { createServer } = require('http');
 const cors = require('cors');
 const { Server } = require('socket.io');
 
@@ -7,17 +8,17 @@ const corsOptions = {
   origin: '*'
 }
 
-const httpServer = express();
+const app = express();
+
+const httpServer = createServer(app)
 
 httpServer.use(cors(corsOptions))
 
 
 const httpPort = 6868;
-const server = httpServer.listen(httpPort, () => {
-  console.log(`Listening on port ${httpPort} ...`)
-});
 
-const ioServer = new Server(server, {
+
+const ioServer = new Server(httpServer, {
   cors: {
     origin: "*"
   }
@@ -54,4 +55,8 @@ ioServer.on('connection', (client) => {
 
     ioServer.sockets.emit('move', clients)
   })
+});
+
+const server = httpServer.listen(httpPort, () => {
+  console.log(`Listening on port ${httpPort} ...`)
 });
