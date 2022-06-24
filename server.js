@@ -9,14 +9,12 @@ const corsOptions = {
 }
 
 const app = express();
+app.use(cors(corsOptions))
 
 const httpServer = createServer(app)
 
-httpServer.use(cors(corsOptions))
-
 
 const httpPort = 6868;
-
 
 const ioServer = new Server(httpServer, {
   cors: {
