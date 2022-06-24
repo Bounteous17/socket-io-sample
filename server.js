@@ -1,4 +1,11 @@
 const express = require('express');
+const { Server } = require('socket.io');
+
+const httpServer = express();
+const httpPort = 6868;
+const server = httpServer.listen(httpPort, () => {
+  console.log(`Listening on port ${httpPort} ...`)
+});
 
 const ioServer = new Server(server, {
   cors: {
