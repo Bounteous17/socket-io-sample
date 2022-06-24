@@ -1,7 +1,17 @@
 const express = require('express');
+const cors = require('cors');
 const { Server } = require('socket.io');
 
+
+const corsOptions = {
+  origin: '*'
+}
+
 const httpServer = express();
+
+httpServer.use(cors(corsOptions))
+
+
 const httpPort = 6868;
 const server = httpServer.listen(httpPort, () => {
   console.log(`Listening on port ${httpPort} ...`)
